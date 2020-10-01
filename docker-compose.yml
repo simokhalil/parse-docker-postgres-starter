@@ -2,19 +2,6 @@ version: '3'
 
 
 services:
-  mongo:
-    image: bitnami/mongodb:latest
-    container_name: test-parse-mongo-db
-    restart: always
-    networks:
-      - back
-    ports:
-      - "27017:27017"
-    env_file:
-      - .env
-    volumes:
-      - ./data/mongo:/bitnami/mongodb
-
   postgres:
     image: bitnami/postgresql:latest
     container_name: test-parse-postgres-db
