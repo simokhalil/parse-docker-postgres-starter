@@ -1,0 +1,58 @@
+version: '3'
+
+
+services:
+  mongo:
+    image: bitnami/mongodb:latest
+    container_name: test-parse-mongo-db
+    restart: always
+    networks:
+      - back
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo:/bitnami/mongodb
+
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: test-parse-postgres-db
+    restart: always
+    networks:
+      - back
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./data/postgres:/bitnami/postgresql
+
+  api:
+    build: ./parse-server
+    image: kelyo/parse-server
+    container_name: test-parse-server
+    restart: always
+    links:
+      - mongo:mongo
+    ports:
+      - "1337:1337"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - front
+      - back
+    labels:
+      traefik.enable: "true"
+      traefik.port: "1337"
+      traefik.frontend.rule: "Host:${APP_DOMAIN}"
+      traefik.docker.network: "${FRONT_NETWORK}"
+
+networks:
+  front:
+    external:
+      name: ${FRONT_NETWORK}
+  back:
+    driver: bridge
