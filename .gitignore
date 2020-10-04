@@ -1,6 +1,7 @@
 parse-server/build/
 parse-server/logs/*
 data/*
+.env
 
 node_modules/
 
