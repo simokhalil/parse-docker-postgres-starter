@@ -4,12 +4,12 @@ version: '3'
 services:
   postgres:
     image: bitnami/postgresql:latest
-    container_name: test-parse-postgres-db
+    container_name: mentorshow--parse-postgres-db
     restart: always
     networks:
       - back
     ports:
-      - "5432:5432"
+      - "50000:5432"
     env_file:
       - .env
     volumes:
@@ -18,19 +18,20 @@ services:
   api:
     build: ./parse-server
     image: kelyo/parse-server
-    container_name: test-parse-server
+    container_name: mentorshow-parse-server
     restart: always
+    command: nodemon --exec npm run dev
     links:
-      - mongo:mongo
-    ports:
-      - "1337:1337"
+      - postgres:postgres
     env_file:
       - .env
     depends_on:
-      - mongo
+      - postgres
     networks:
       - front
       - back
+    volumes:
+      - ./parse-server:/usr/src/parse
     labels:
       traefik.enable: "true"
       traefik.port: "1337"

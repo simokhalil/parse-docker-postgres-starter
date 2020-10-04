@@ -1,3 +1,5 @@
+parse-server/build/
+parse-server/logs/*
 data/*
 
 node_modules/

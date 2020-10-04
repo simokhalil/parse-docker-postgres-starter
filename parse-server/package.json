@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
     "parse-dashboard": "^2.1.0",
     "parse-server": "^4.3.0"
   },

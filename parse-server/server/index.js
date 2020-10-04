@@ -1,6 +1,8 @@
-var express = require('express');
-var ParseServer = require('parse-server').ParseServer;
-var ParseDashboard = require('parse-dashboard');
+const express = require('express');
+const ParseServer = require('parse-server').ParseServer;
+const ParseDashboard = require('parse-dashboard');
+
+const apiRoutes = require('./api');
 
 const mountPath = process.env.PARSE_MOUNT || '/parse';
 const port = process.env.PORT || 1337;
@@ -15,7 +17,7 @@ const appName = process.env.APP_NAME;
 const dashboard_user = process.env.DASHBOARD_USER;
 const dashboard_password = process.env.DASHBOARD_PASSWORD;
 
-var api = new ParseServer({
+const api = new ParseServer({
   databaseURI: databaseURI,
   cloud: cloudPath,
   appId: appId,
@@ -24,7 +26,7 @@ var api = new ParseServer({
   logLevel: logLevel,
 })
 
-var dashboard = new ParseDashboard(
+const dashboard = new ParseDashboard(
   {
     apps: [
       {
@@ -46,11 +48,17 @@ var dashboard = new ParseDashboard(
   { allowInsecureHTTP: allowInsecureHTTP }
 )
 
-var app = express();
+const app = express();
+
+app.locals.title = 'Data API';
+app.locals.version = '1.0';
+
 app.use(mountPath, api);
 app.use('/dashboard', dashboard);
 
-var httpServer = require('http').createServer(app)
+app.use('/api', apiRoutes);
+
+const httpServer = require('http').createServer(app)
 httpServer.listen(port, function() {
   console.log('parse-server running on port ' + port + '.')
 });
