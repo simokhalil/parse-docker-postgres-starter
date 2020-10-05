@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
   res.json({
     api: req.app.locals.title,
     version: req.app.locals.version,
+    environment: process.env.ENVIRONMENT,
   });
 });
 
