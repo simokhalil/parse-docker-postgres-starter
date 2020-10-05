@@ -1,9 +1,9 @@
-import express, { Application } from 'express';
-// import express from 'express';
+import { Application } from 'express';
 import * as http from 'http';
 
 import apiRoutes from './api';
 
+const express = require('express');
 const parseServer = require('parse-server').ParseServer;
 const parseDashboard = require('parse-dashboard');
 
