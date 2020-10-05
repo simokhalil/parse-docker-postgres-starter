@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports" : true,
+    "baseUrl": ".",
+    "module": "commonjs",
+    "outDir": "build",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "paths": {
+      "*": [
+          "node_modules/*",
+          "src/*"
+      ]
+    }
+  },
+  "compileOnSave": true,
+  "include": [
+    "src/**/*"
+  ]
+}

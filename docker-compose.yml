@@ -20,7 +20,7 @@ services:
     image: kelyo/parse-server
     container_name: mentorshow-parse-server
     restart: always
-    command: nodemon --exec npm run dev
+    command: npm run dev
     links:
       - postgres:postgres
     env_file:
